@@ -4,82 +4,24 @@
   <meta charset="UTF-8" />
   <title>Classic Brain Games</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/png" href="logo.png" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #222;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-    }
-    header img {
-      height: 60px;
-      vertical-align: middle;
-    }
-    header h1 {
-      display: inline-block;
-      margin: 0;
-      padding-left: 10px;
-      font-size: 1.8rem;
-      vertical-align: middle;
-    }
-    main {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 2rem;
-    }
-    .game-box {
-      background: #fff;
-      margin: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      width: 280px;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    }
-    .game-box img {
-      width: 100%;
-      border-radius: 8px 8px 0 0;
-    }
-    .game-box h3 {
-      margin: 0;
-      padding: 0.5rem;
-      font-size: 1.2rem;
-    }
-    .game-box a {
-      display: block;
-      padding: 0.5rem;
-      text-decoration: none;
-      color: #0066cc;
-      font-weight: bold;
-    }
-  </style>
 </head>
-<body>
-  <header>
-    <img src="logo.png" alt="Classic Brain Games Logo" />
-    <h1>Classic Brain Games</h1>
+<body style="font-family: Arial, sans-serif; background:#f0f0f0; text-align: center;">
+  <header style="background:#222; color:white; padding:1rem;">
+    <h1>🧠 Classic Brain Games</h1>
     <p>Free cognitive games for seniors and therapy providers</p>
   </header>
-  <main>
-    <div class="game-box">
-      <img src="memory-match/memory-thumb.jpg" alt="Memory Match" />
-      <h3>Memory Match</h3>
-      <a href="memory-match/index.html">Play Game</a>
-      <a href="memory-match/index.html" target="_blank">Embed Game</a>
+  <main style="padding: 2rem;">
+    <div style="display:inline-block; margin:1rem;">
+      <a href="memory-match/index.html">
+        <img src="memory-match/memory-thumb.jpg" alt="Memory Match" style="width:280px; border-radius:8px;">
+        <h3>Memory Match</h3>
+      </a>
     </div>
-
-    <div class="game-box">
-      <img src="solitaire/solitaire-thumb.jpg" alt="Classic Solitaire" />
-      <h3>Classic Solitaire</h3>
-      <a href="solitaire/index.html">Play Game</a>
-      <a href="solitaire/index.html" target="_blank">Embed Game</a>
+    <div style="display:inline-block; margin:1rem;">
+      <a href="solitaire/index.html">
+        <img src="solitaire/solitaire-thumb.jpg" alt="Solitaire" style="width:280px; border-radius:8px;">
+        <h3>Classic Solitaire</h3>
+      </a>
     </div>
   </main>
 </body>

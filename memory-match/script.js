@@ -14,7 +14,7 @@ const emojis = ["🍎", "🍌", "🍇", "🍒", "🍓", "🥝"];
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1)];
+    const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
@@ -41,10 +41,12 @@ function handleFlip(card) {
       first.classList.add("matched");
       second.classList.add("matched");
       matchedCards += 2;
-      showMatchEffect(first);
       flippedCards = [];
 
-      if (matchedCards === 12) setTimeout(showWinMessage, 800);
+      if (matchedCards === 12) setTimeout(() => {
+        winContainer.innerHTML = '<h2>You Won!</h2>';
+        clearInterval(interval);
+      }, 800);
     } else {
       setTimeout(() => {
         first.classList.remove("flipped");
@@ -53,18 +55,6 @@ function handleFlip(card) {
       }, 1000);
     }
   }
-}
-
-function showMatchEffect(card) {
-  const effect = document.createElement("div");
-  effect.classList.add("firework");
-  card.appendChild(effect);
-  setTimeout(() => effect.remove(), 1500);
-}
-
-function showWinMessage() {
-  clearInterval(interval);
-  gameBoard.innerHTML = '<h2 style="text-align:center;">🎉 You Won!</h2><img src="win.gif" width="150" />';
 }
 
 function startTimer() {
