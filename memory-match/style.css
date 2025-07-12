@@ -15,28 +15,31 @@ h1 {
 }
 .game-container {
   text-align: center;
+  width: 100%;
 }
 .board {
   display: grid;
-  grid-template-columns: repeat(4, 80px);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   justify-content: center;
-  margin: 20px 0;
+  margin: 20px auto;
+  padding: 0 10px;
+  max-width: 400px;
 }
 .card {
-  width: 80px;
-  height: 80px;
+  aspect-ratio: 1/1;
   background-color: #fff;
   color: #000;
-  font-size: 40px;
+  font-size: 8vw;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   user-select: none;
+  border-radius: 8px;
 }
-.card.matched {
-  visibility: hidden;
+.card.revealed {
+  background-color: #c8e6c9;
 }
 .hidden {
   display: none;
@@ -53,12 +56,9 @@ h1 {
 }
 @media (max-width: 500px) {
   .board {
-    grid-template-columns: repeat(4, 60px);
-    gap: 8px;
+    max-width: 90vw;
   }
   .card {
-    width: 60px;
-    height: 60px;
-    font-size: 30px;
+    font-size: 12vw;
   }
 }
