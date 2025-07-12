@@ -3,17 +3,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Memory Match</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Memory Match</h1>
-  <p id="timer">Time: 0s</p>
-  <button onclick="location.reload()">🔄 Restart</button>
-  <div id="game-board"></div>
-  <div id="win-message" class="hidden">
-    🎉 You<br />Won! 🎉
+  <div class="game-container">
+    <h1>Memory Match</h1>
+    <div class="info">
+      <p id="timer">Time: 0s</p>
+      <button onclick="restartGame()">🔁 Restart</button>
+    </div>
+    <div id="game-board" class="board"></div>
+    <div id="win-message" class="hidden">
+      <div class="message-box">
+        <p>🎉 You Won! 🎉</p>
+      </div>
+      <img src="fireworks.gif" alt="Fireworks" class="fireworks" />
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
