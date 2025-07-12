@@ -28,7 +28,22 @@ function createCard(content) {
   return card;
 }
 
+
+function showFirework(type) {
+  const fw = document.createElement("img");
+  fw.src = type === 'win' ? "win-firework.gif" : "match-firework.gif";
+  fw.style.position = "absolute";
+  fw.style.left = "50%";
+  fw.style.top = "50%";
+  fw.style.transform = "translate(-50%, -50%)";
+  fw.style.width = type === 'win' ? "300px" : "100px";
+  fw.style.pointerEvents = "none";
+  document.body.appendChild(fw);
+  setTimeout(() => fw.remove(), 1500);
+}
+
 function handleFlip(card) {
+
   if (flippedCards.length >= 2 || card.classList.contains("matched") || flippedCards.includes(card)) return;
 
   card.classList.add("flipped");
@@ -39,12 +54,14 @@ function handleFlip(card) {
     const [first, second] = flippedCards;
     if (first.dataset.content === second.dataset.content) {
       first.classList.add("matched");
+      showFirework("match");
       second.classList.add("matched");
       matchedCards += 2;
       flippedCards = [];
 
       if (matchedCards === 16) setTimeout(() => {
-        winContainer.innerHTML = '<h2>You Won!</h2>';
+        winContainer.innerHTML = "<h2>You Won!</h2>";
+        showFirework("win");
         clearInterval(interval);
       }, 800);
     } else {
