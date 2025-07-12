@@ -65,6 +65,7 @@ function showFirework(type) {
   fw.style.width = type === "win" ? "200px" : "100px";
   fw.style.zIndex = "9999";
   fw.style.pointerEvents = "none";
+  fw.style.animation = "fadeout 1.5s forwards";
   document.body.appendChild(fw);
   setTimeout(() => fw.remove(), 1500);
 }
@@ -96,7 +97,7 @@ function flipCard(e) {
       setTimeout(() => {
         document.getElementById('win-message').classList.remove('hidden');
         showFirework("win");
-      }, 800);
+      }, 600);
     }
     resetTurn();
   } else {
