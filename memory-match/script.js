@@ -28,23 +28,14 @@ function createCard(content) {
   return card;
 }
 
-
-function showFirework(type) {
-  const fw = document.createElement("img");
-  fw.src = type === 'win' ? "win-firework.gif" : "match-firework.gif";
-  fw.style.position = "absolute";
-  fw.style.left = "50%";
-  fw.style.top = "50%";
-  fw.style.transform = "translate(-50%, -50%)";
-  fw.style.width = type === 'win' ? "300px" : "100px";
-  fw.style.pointerEvents = "none";
-  document.body.appendChild(fw);
-  setTimeout(() => fw.remove(), 1500);
-}
-
 function handleFlip(card) {
-
-  if (flippedCards.length >= 2 || card.classList.contains("matched") || flippedCards.includes(card)) return;
+  if (
+    flippedCards.length === 2 ||
+    card.classList.contains("flipped") ||
+    card.classList.contains("matched")
+  ) {
+    return;
+  }
 
   card.classList.add("flipped");
   card.textContent = card.dataset.content;
@@ -54,16 +45,18 @@ function handleFlip(card) {
     const [first, second] = flippedCards;
     if (first.dataset.content === second.dataset.content) {
       first.classList.add("matched");
-      showFirework("match");
       second.classList.add("matched");
-      matchedCards += 2;
       flippedCards = [];
+      matchedCards += 2;
+      showFirework("match");
 
-      if (matchedCards === 16) setTimeout(() => {
-        winContainer.innerHTML = "<h2>You Won!</h2>";
-        showFirework("win");
+      if (matchedCards === 16) {
         clearInterval(interval);
-      }, 800);
+        setTimeout(() => {
+          showFirework("win");
+          gameBoard.innerHTML = "<h2 style='color:white'>🎉 You Won! 🎉</h2>";
+        }, 800);
+      }
     } else {
       setTimeout(() => {
         first.classList.remove("flipped");
@@ -76,29 +69,39 @@ function handleFlip(card) {
   }
 }
 
-function startTimer() {
+function startGame() {
+  cards = [];
+  flippedCards = [];
+  matchedCards = 0;
   timer = 0;
-  timerDisplay.innerText = "Time: 0s";
+  clearInterval(interval);
+  timerDisplay.textContent = "Time: 0s";
+
+  const doubled = shuffle([...emojis, ...emojis]);
+  doubled.forEach((emoji) => {
+    cards.push(createCard(emoji));
+  });
+
+  gameBoard.innerHTML = "";
+  cards.forEach((card) => gameBoard.appendChild(card));
+
   interval = setInterval(() => {
     timer++;
-    timerDisplay.innerText = "Time: " + timer + "s";
+    timerDisplay.textContent = `Time: ${timer}s`;
   }, 1000);
 }
 
-function startGame() {
-  gameBoard.innerHTML = "";
-  winContainer.innerHTML = "";
-  matchedCards = 0;
-  flippedCards = [];
-  clearInterval(interval);
-  startTimer();
-
-  const shuffled = shuffle([...emojis, ...emojis]);
-  shuffled.forEach(content => {
-    const card = createCard(content);
-    gameBoard.appendChild(card);
-  });
+function showFirework(type) {
+  const fw = document.createElement("img");
+  fw.src = type === "win" ? "win-firework.gif" : "match-firework.gif";
+  fw.style.position = "absolute";
+  fw.style.left = "50%";
+  fw.style.top = type === "win" ? "50%" : "40%";
+  fw.style.transform = "translate(-50%, -50%)";
+  fw.style.width = type === "win" ? "150px" : "80px";
+  document.body.appendChild(fw);
+  setTimeout(() => fw.remove(), 1500);
 }
 
 restartBtn.addEventListener("click", startGame);
-startGame();
+window.onload = startGame;
