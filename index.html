@@ -2,35 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classic Brain Games</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #333;
+    }
+    .game-link {
+      margin: 1rem auto;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #ccc;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+    a {
+      text-decoration: none;
+      color: #0066cc;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <nav class="topnav">
-    <a href="/"><img src="/assets/logo.png" alt="Site Logo" class="logo" /></a>
-    <a href="/">Home</a>
-    <a href="/memory-match/">Memory Match</a>
-    <a href="/solitaire/">Solitaire</a>
-    <a href="#embed">Embed a Game</a>
-  </nav>
+  <h1>🧠 Classic Brain Games</h1>
+  <p>Free, ad-supported games for seniors and therapy programs.</p>
 
-  <header>
-    <h1><a href="/">Classic Brain Games</a></h1>
-    <p>Your go-to destination for free, senior-friendly brain games that can be played directly or embedded onto any website. Perfect for therapy clinics, caregivers, and older adults wanting a daily mental boost.</p>
-  </header>
+  <div class="game-link">
+    <a href="memory-match/index.html">🃏 Memory Match</a><br/>
+    <a href="memory-match/index.html" target="_blank">Embed Memory Match</a>
+  </div>
 
-  <main class="games">
-    <div class="game">
-      <a href="/memory-match/"><img src="/memory-match/assets/thumbnail.jpg" alt="Memory Match thumbnail" /></a>
-      <h2>Memory Match</h2>
-      <p><a href="/memory-match/embed.html">Embed this game →</a></p>
-    </div>
-    <div class="game">
-      <a href="/solitaire/"><img src="/solitaire/thumbnail.jpg" alt="Solitaire thumbnail" /></a>
-      <h2>Solitaire</h2>
-      <p><a href="/solitaire/embed.html">Embed this game →</a></p>
-    </div>
-  </main>
+  <div class="game-link">
+    <a href="solitaire/index.html">♠️ Classic Solitaire</a><br/>
+    <a href="solitaire/index.html" target="_blank">Embed Solitaire</a>
+  </div>
 </body>
 </html>
