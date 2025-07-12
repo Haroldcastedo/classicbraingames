@@ -10,7 +10,7 @@ let matchedCards = 0;
 let timer = 0;
 let interval;
 
-const emojis = ["🍎", "🍌", "🍇", "🍒", "🍓", "🥝"];
+const emojis = ["🍎", "🍌", "🍇", "🍒", "🍓", "🥝", "🍍", "🥥"];
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -43,7 +43,7 @@ function handleFlip(card) {
       matchedCards += 2;
       flippedCards = [];
 
-      if (matchedCards === 12) setTimeout(() => {
+      if (matchedCards === 16) setTimeout(() => {
         winContainer.innerHTML = '<h2>You Won!</h2>';
         clearInterval(interval);
       }, 800);
