@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Classic Solitaire</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Classic Solitaire</h1>
-  <div id="game-container"></div>
-  <button id="restart">Restart Game</button>
+  <div class="top-bar">
+    <button id="restart">Restart</button>
+    <button id="undo">Undo</button>
+    <span id="score">Score: 0</span>
+  </div>
+  <div class="board">
+    <div class="stock-area">
+      <div id="stock" class="pile"></div>
+      <div id="waste" class="pile"></div>
+    </div>
+    <div class="foundation-area">
+      <div class="foundation pile" data-suit="♠"></div>
+      <div class="foundation pile" data-suit="♥"></div>
+      <div class="foundation pile" data-suit="♦"></div>
+      <div class="foundation pile" data-suit="♣"></div>
+    </div>
+    <div id="tableau" class="tableau-area"></div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

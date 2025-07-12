@@ -1,34 +1,63 @@
 
 body {
-  background-color: #2e7d32;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Georgia", serif;
+  background: #0b3d0b;
   color: white;
-  text-align: center;
+  margin: 0;
   padding: 20px;
+  text-align: center;
 }
-
-#game-container {
+h1 {
+  margin-bottom: 10px;
+}
+.top-bar {
+  margin-bottom: 20px;
+}
+.board {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
 }
-
+.stock-area, .foundation-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.tableau-area {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.pile {
+  width: 80px;
+  height: 120px;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: rgba(255,255,255,0.1);
+  position: relative;
+}
 .card {
   width: 80px;
   height: 120px;
-  background-color: white;
-  color: black;
+  background: white;
   border-radius: 5px;
-  margin: 5px;
+  position: absolute;
+  cursor: pointer;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 24px;
-  cursor: pointer;
 }
-
 .card.red {
   color: red;
+}
+.card.back {
+  background: repeating-linear-gradient(
+    45deg,
+    #333,
+    #333 10px,
+    #555 10px,
+    #555 20px
+  );
+  color: transparent;
 }
