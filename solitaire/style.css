@@ -1,0 +1,65 @@
+body {
+  background: darkgreen;
+  font-family: Arial, sans-serif;
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+h1 {
+  margin: 20px 0 10px;
+}
+.controls {
+  margin-bottom: 10px;
+}
+#scoreDisplay {
+  margin-left: 20px;
+  font-size: 1.2em;
+}
+#solitaire-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pile-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+.draw-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.pile {
+  width: 100px;
+  height: 140px;
+  background-color: #065f06;
+  border: 2px solid white;
+  border-radius: 8px;
+  position: relative;
+}
+.card {
+  width: 90px;
+  height: 130px;
+  background: white;
+  color: black;
+  border-radius: 6px;
+  font-size: 28px;
+  position: absolute;
+  left: 5px;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+.card.red {
+  color: red;
+}
+.card.back {
+  background: navy;
+  color: transparent;
+  cursor: pointer;
+}
