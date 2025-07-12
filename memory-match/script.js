@@ -23,7 +23,6 @@ function shuffle(array) {
 function createCard(content) {
   const card = document.createElement("div");
   card.classList.add("card");
-  card.innerText = content;
   card.dataset.content = content;
   card.addEventListener("click", () => handleFlip(card));
   return card;
@@ -33,6 +32,7 @@ function handleFlip(card) {
   if (flippedCards.length >= 2 || card.classList.contains("matched") || flippedCards.includes(card)) return;
 
   card.classList.add("flipped");
+  card.textContent = card.dataset.content;
   flippedCards.push(card);
 
   if (flippedCards.length === 2) {
@@ -51,6 +51,8 @@ function handleFlip(card) {
       setTimeout(() => {
         first.classList.remove("flipped");
         second.classList.remove("flipped");
+        first.textContent = "";
+        second.textContent = "";
         flippedCards = [];
       }, 1000);
     }

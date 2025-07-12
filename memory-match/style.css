@@ -16,12 +16,20 @@ body {
   width: 80px;
   height: 80px;
   font-size: 2rem;
+  background: #888;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e0e0e0;
-  cursor: pointer;
+  border-radius: 10px;
+  color: transparent;
+  transition: all 0.3s ease;
 }
-.card.flipped, .card.matched {
+.card.flipped {
+  color: black;
+  background: #fff;
+}
+.card.matched {
   background: #b3e5fc;
+  color: black;
 }
