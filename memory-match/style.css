@@ -3,18 +3,24 @@ body {
   font-family: Arial, sans-serif;
   background: #f8f8f8;
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
+  margin: 0;
 }
 #game-board {
   display: grid;
-  grid-template-columns: repeat(4, 80px);
-  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px auto;
+  max-width: 90vw;
+  padding: 10px;
+  border: 5px solid green;
+  border-radius: 10px;
+  background-color: #fff;
 }
 .card {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   font-size: 2rem;
   background: #888;
   cursor: pointer;
@@ -32,4 +38,16 @@ body {
 .card.matched {
   background: #b3e5fc;
   color: black;
+}
+#win-message-container {
+  margin-top: 1rem;
+}
+#timer {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-top: 10px;
 }
