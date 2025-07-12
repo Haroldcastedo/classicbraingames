@@ -1,53 +1,79 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: #2e7d32; /* darker green for full screen */
   text-align: center;
-  padding: 1rem;
+  background-color: #2e7d32;
+  color: #fff;
   margin: 0;
+  padding: 0;
 }
+
+h1 {
+  margin-top: 20px;
+}
+
 #game-board {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, 80px);
+  grid-gap: 10px;
   justify-content: center;
   margin: 20px auto;
-  width: 100%;
-  max-width: 400px;
   padding: 10px;
+  background-color: #388e3c;
   border-radius: 10px;
-  background-color: #66bb6a; /* slightly lighter green for gameboard */
+  width: fit-content;
 }
+
 .card {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  font-size: 2rem;
-  background: #888;
-  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  background-color: #1b5e20;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 40px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.card.revealed {
+  background-color: #a5d6a7;
+}
+
+#win-message {
+  background-color: #66bb6a;
+  padding: 20px;
   border-radius: 10px;
-  color: transparent;
-  transition: all 0.3s ease;
-}
-.card.flipped {
-  color: black;
-  background: #fff;
-}
-.card.matched {
-  background: #b3e5fc;
-  color: black;
-}
-#win-message-container {
-  margin-top: 1rem;
-}
-#timer {
+  margin: 20px auto;
+  display: none;
+  width: fit-content;
+  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  color: #fff;
 }
+
+#win-message.show {
+  display: block;
+}
+
 button {
   padding: 10px 20px;
-  font-size: 1rem;
+  font-size: 16px;
   margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+@media (max-width: 600px) {
+  #game-board {
+    grid-template-columns: repeat(4, 60px);
+  }
+  .card {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+  }
 }

@@ -1,107 +1,73 @@
 
-const gameBoard = document.getElementById("game-board");
-const restartBtn = document.getElementById("restart");
-const timerDisplay = document.getElementById("timer");
-const winContainer = document.getElementById("win-message-container");
-
+const board = document.getElementById('game-board');
+const winMessage = document.getElementById('win-message');
+const timerDisplay = document.getElementById('timer');
 let cards = [];
-let flippedCards = [];
-let matchedCards = 0;
-let timer = 0;
-let interval;
+let flipped = [];
+let matched = [];
+let time = 0;
+let timer;
 
-const emojis = ["🍎", "🍌", "🍇", "🍒", "🍓", "🥝", "🍍", "🥥"];
+const emojis = ['🍎','🍌','🍇','🍓','🍍','🥝','🍒','🍉'];
 
 function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+  return array.concat(array).sort(() => Math.random() - 0.5);
 }
 
-function createCard(content) {
-  const card = document.createElement("div");
-  card.classList.add("card");
-  card.dataset.content = content;
-  card.addEventListener("click", () => handleFlip(card));
-  return card;
+function startTimer() {
+  timer = setInterval(() => {
+    time++;
+    timerDisplay.textContent = `Time: ${time}s`;
+  }, 1000);
 }
 
-function handleFlip(card) {
-  if (
-    flippedCards.length === 2 ||
-    card.classList.contains("flipped") ||
-    card.classList.contains("matched")
-  ) {
-    return;
-  }
+function createBoard() {
+  board.innerHTML = '';
+  cards = shuffle(emojis);
+  cards.forEach((emoji, i) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.index = i;
+    card.dataset.emoji = emoji;
+    card.addEventListener('click', handleClick);
+    board.appendChild(card);
+  });
+}
 
-  card.classList.add("flipped");
-  card.textContent = card.dataset.content;
-  flippedCards.push(card);
+function handleClick(e) {
+  const card = e.currentTarget;
+  const index = card.dataset.index;
+  if (flipped.includes(index) || matched.includes(index)) return;
 
-  if (flippedCards.length === 2) {
-    const [first, second] = flippedCards;
-    if (first.dataset.content === second.dataset.content) {
-      first.classList.add("matched");
-      second.classList.add("matched");
-      flippedCards = [];
-      matchedCards += 2;
-      showFirework("match");
+  card.textContent = card.dataset.emoji;
+  card.classList.add('revealed');
+  flipped.push(index);
 
-      if (matchedCards === 16) {
-        clearInterval(interval);
-        setTimeout(() => {
-          showFirework("win");
-          gameBoard.innerHTML = "<h2 style='color:white'>🎉 You Won! 🎉</h2>";
-        }, 800);
+  if (flipped.length === 2) {
+    const [i1, i2] = flipped;
+    const c1 = board.querySelector(`[data-index="${i1}"]`);
+    const c2 = board.querySelector(`[data-index="${i2}"]`);
+    if (c1.dataset.emoji === c2.dataset.emoji) {
+      matched.push(i1, i2);
+      flipped = [];
+      if (matched.length === cards.length) {
+        clearInterval(timer);
+        winMessage.innerHTML = `🎉 You<br>Won! 🎉<br>${time}s`;
+        winMessage.classList.add('show');
       }
     } else {
       setTimeout(() => {
-        first.classList.remove("flipped");
-        second.classList.remove("flipped");
-        first.textContent = "";
-        second.textContent = "";
-        flippedCards = [];
+        c1.textContent = '';
+        c2.textContent = '';
+        c1.classList.remove('revealed');
+        c2.classList.remove('revealed');
+        flipped = [];
       }, 1000);
     }
   }
 }
 
-function startGame() {
-  cards = [];
-  flippedCards = [];
-  matchedCards = 0;
-  timer = 0;
-  clearInterval(interval);
-  timerDisplay.textContent = "Time: 0s";
-
-  const doubled = shuffle([...emojis, ...emojis]);
-  doubled.forEach((emoji) => {
-    cards.push(createCard(emoji));
-  });
-
-  gameBoard.innerHTML = "";
-  cards.forEach((card) => gameBoard.appendChild(card));
-
-  interval = setInterval(() => {
-    timer++;
-    timerDisplay.textContent = `Time: ${timer}s`;
-  }, 1000);
-}
-
-function showFirework(type) {
-  const fw = document.createElement("img");
-  fw.src = type === "win" ? "win-firework.gif" : "match-firework.gif";
-  fw.style.position = "absolute";
-  fw.style.left = "50%";
-  fw.style.top = type === "win" ? "50%" : "40%";
-  fw.style.transform = "translate(-50%, -50%)";
-  fw.style.width = type === "win" ? "150px" : "80px";
-  document.body.appendChild(fw);
-  setTimeout(() => fw.remove(), 1500);
-}
-
-restartBtn.addEventListener("click", startGame);
-window.onload = startGame;
+window.onload = () => {
+  startTimer();
+  createBoard();
+};
