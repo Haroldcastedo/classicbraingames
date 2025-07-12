@@ -19,18 +19,17 @@ h1 {
 }
 .board {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 80px);
   gap: 10px;
   justify-content: center;
   margin: 20px auto;
-  padding: 0 10px;
-  max-width: 400px;
 }
 .card {
-  aspect-ratio: 1/1;
+  width: 80px;
+  height: 80px;
   background-color: #fff;
   color: #000;
-  font-size: 8vw;
+  font-size: 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,21 +43,31 @@ h1 {
 .hidden {
   display: none;
 }
-.fireworks {
-  width: 150px;
-  margin-top: 20px;
-}
 .message-box {
   background-color: #66bb6a;
   padding: 20px;
   border-radius: 10px;
   font-size: 1.5rem;
 }
+#win-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+.win-fireworks {
+  width: 200px;
+  margin-top: 20px;
+}
 @media (max-width: 500px) {
   .board {
-    max-width: 90vw;
+    grid-template-columns: repeat(4, 70px);
   }
   .card {
-    font-size: 12vw;
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
   }
 }

@@ -63,6 +63,7 @@ function showFirework(type) {
   fw.style.top = "50%";
   fw.style.transform = "translate(-50%, -50%)";
   fw.style.width = type === "win" ? "200px" : "100px";
+  fw.style.zIndex = "9999";
   fw.style.pointerEvents = "none";
   document.body.appendChild(fw);
   setTimeout(() => fw.remove(), 1500);
