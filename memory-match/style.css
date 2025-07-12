@@ -12,11 +12,11 @@ body {
   gap: 10px;
   justify-content: center;
   margin: 20px auto;
-  max-width: 90vw;
+  width: 100%;
+  max-width: 400px;
   padding: 10px;
-  border: 5px solid green;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: #d4f5d4; /* green background */
 }
 .card {
   width: 100%;
