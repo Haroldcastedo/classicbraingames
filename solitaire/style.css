@@ -1,3 +1,91 @@
+body {
+  margin: 0;
+  padding: 10px;
+  background: #0B6623;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+h1 {
+  margin: 0 0 10px;
+}
+.top-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.pile {
+  width: 80px;
+  height: 120px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: #444;
+  position: relative;
+}
+.stock, .pile.stock {
+  cursor: pointer;
+}
+.foundations {
+  display: flex;
+  gap: 10px;
+}
+.foundation {
+  background-color: #666;
+}
+.tableau {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.tableau .pile {
+  height: 500px;
+  background-color: transparent;
+  border: none;
+}
+.card {
+  width: 80px;
+  height: 120px;
+  border-radius: 6px;
+  border: 1px solid #000;
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  line-height: 120px;
+  text-align: center;
+  position: absolute;
+  cursor: grab;
+}
+.card.face-down {
+  background-color: #444;
+  color: transparent;
+}
+.controls {
+  margin-top: 15px;
+}
+button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  font-size: 14px;
+}
+#win-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  z-index: 1000;
+}
+#win-overlay.hidden {
+  display: none;
+}
+.win-message {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.win-firework {
+  width: 200px;
+}
 @keyframes fadeOut {
   to { opacity: 0; }
 }
