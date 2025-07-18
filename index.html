@@ -2,124 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Whack A Mole</title>
+  <title>Classic Brain Games</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans:400&display=swap" rel="stylesheet"/>
   <style>
+    :root {
+      --primary: #2e8b57;
+      --accent:  #f5a623;
+      --bg:      #f0f9f5;
+      --gray:    #555;
+    }
+    * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      color: var(--gray);
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, #3cb371 100%);
+      color: white;
       text-align: center;
-      padding: 1rem;
-      background: #f0f0f0;
-    }
-    #controls {
-      margin-bottom: 1rem;
-    }
-    #holes {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 10px;
-      justify-content: center;
-      margin: 0 auto;
-    }
-    .hole {
-      width: 100px;
-      height: 100px;
-      background: #ccc;
-      border-radius: 50%;
+      padding: 2rem 1rem;
       position: relative;
-      overflow: hidden;
-      cursor: pointer;
     }
-    .mole {
+    /* Logo */
+    header .logo {
       position: absolute;
-      bottom: -80px;        /* start hidden below */
-      left: 10px;
-      width: 80px;
-      height: 80px;
-      transition: bottom 0.2s ease-out;
-      user-select: none;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 64px;
     }
-    .visible {
-      bottom: 10px;         /* pop up */
+    header h1 {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
     }
-    #score, #time {
+    header p {
+      margin: .5rem 0 0;
+      font-size: 1.1rem;
+    }
+    main {
+      width: 100%;
+      max-width: 960px;
+      padding: 2rem 1rem;
+    }
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .game {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .game:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .game img {
+      width: 100%;
+      display: block;
+    }
+    .game p {
+      margin: 1rem 0;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.2rem;
-      margin: 0 1rem;
+      color: var(--primary);
     }
-    #start {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
+    footer {
+      margin: 2rem 0;
+      font-size: 0.9rem;
+      color: #888;
     }
+    a { text-decoration: none; }
   </style>
 </head>
 <body>
-  <h2>Whack A Mole</h2>
-  <div id="controls">
-    Time left: <span id="time">30</span>s&nbsp;&nbsp;&nbsp;Score: <span id="score">0</span>
-    <button id="start">Start</button>
-  </div>
-  <div id="holes"></div>
 
-  <script>
-    const holesEl = document.getElementById('holes');
-    const scoreEl = document.getElementById('score');
-    const timeEl  = document.getElementById('time');
-    const startBtn= document.getElementById('start');
-    let score=0, timeLeft=30, timerId, moleTimer;
+  <header>
+    <!-- Your logo on the left -->
+    <img src="/logo.png" alt="Classic Brain Games" class="logo">
+    <h1>Classic Brain Games</h1>
+    <p>Fun, free games to boost memory and reaction time</p>
+  </header>
 
-    // Build 9 holes
-    for(let i=0;i<9;i++){
-      const hole=document.createElement('div');
-      hole.className='hole';
-      holesEl.appendChild(hole);
-    }
+  <main>
+    <div class="games">
+      <a href="/memory-match.html" class="game">
+        <img src="/memory-thumb.jpg" alt="Memory Match">
+        <p>Memory Match</p>
+      </a>
+      <a href="/whack-a-mole.html" class="game">
+        <img src="/whack-thumb.jpg" alt="Whack A Mole">
+        <p>Whack A Mole</p>
+      </a>
+    </div>
+  </main>
 
-    function showMole(){
-      // clear any existing mole
-      document.querySelectorAll('.hole .mole').forEach(m=>m.remove());
+  <footer>
+    &copy; 2025 Classic Brain Games
+  </footer>
 
-      const holeEls = document.querySelectorAll('.hole');
-      const idx = Math.floor(Math.random()*holeEls.length);
-      const mole = document.createElement('img');
-      mole.src = 'mole.png';
-      mole.alt = 'mole';
-      mole.className = 'mole';
-      // on click, bump score and remove
-      mole.addEventListener('click', () => {
-        score++;
-        scoreEl.textContent = score;
-        mole.remove();
-      });
-      holeEls[idx].appendChild(mole);
-
-      // trigger pop
-      requestAnimationFrame(() => {
-        mole.classList.add('visible');
-      });
-    }
-
-    function startGame(){
-      score=0; timeLeft=30;
-      scoreEl.textContent = 0;
-      timeEl.textContent = 30;
-      startBtn.disabled = true;
-
-      showMole();
-      moleTimer = setInterval(showMole, 800);
-
-      timerId = setInterval(()=>{
-        timeLeft--;
-        timeEl.textContent = timeLeft;
-        if(timeLeft <= 0){
-          clearInterval(timerId);
-          clearInterval(moleTimer);
-          alert('Time up! Your score: '+score);
-          startBtn.disabled = false;
-        }
-      },1000);
-    }
-
-    startBtn.addEventListener('click', startGame);
-  </script>
 </body>
 </html>
