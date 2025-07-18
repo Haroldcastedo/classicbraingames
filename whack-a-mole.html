@@ -8,49 +8,50 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 1rem;
+      padding: 1.5rem;
       background: #f0f0f0;
     }
     #controls {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
+    #score, #time {
+      font-size: 1.4rem;
+      margin: 0 1rem;
+    }
+    #start {
+      padding: 0.75rem 1.25rem;
+      font-size: 1.1rem;
+    }
+
     #holes {
       display: grid;
-      grid-template-columns: repeat(3, 120px);
-      gap: 15px;
+      grid-template-columns: repeat(3, 150px);
+      gap: 20px;
       justify-content: center;
       margin: 0 auto;
     }
     .hole {
-      width: 120px;
-      height: 80px;
-      background: #8B4513;         /* saddle‑brown to match your mole base */
-      border-radius: 60px / 40px;  /* oblong shape */
+      width: 150px;
+      height: 100px;
+      background: #8B4513;           /* saddle‑brown base */
+      border-radius: 75px / 50px;    /* oblong */
       position: relative;
-      overflow: visible;           /* allow mole to show above rim */
+      overflow: visible;             /* allow mole above rim */
       cursor: pointer;
     }
     .mole {
       position: absolute;
-      bottom: 0;                   /* aligns mole base with hole rim */
+      bottom: -120px;                /* start fully hidden */
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
-      height: 100px;
-      transition: bottom 0.2s ease-out;
+      width: 120px;
+      height: auto;
+      transition: bottom 0.5s ease-out;
       user-select: none;
-      z-index: 10;                 /* sit above the hole */
+      z-index: 10;                   /* top of hole rim */
     }
-    .mole.hidden {
-      bottom: -80px;               /* fully hidden below hole */
-    }
-    #score, #time {
-      font-size: 1.2rem;
-      margin: 0 1rem;
-    }
-    #start {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
+    .mole.up {
+      bottom: 0;                     /* travel up onto the rim */
     }
   </style>
 </head>
@@ -69,7 +70,7 @@
     const startBtn= document.getElementById('start');
     let score = 0, timeLeft = 30, timerId, moleTimer;
 
-    // Build 9 oblong holes
+    // Create 9 holes
     for (let i = 0; i < 9; i++) {
       const hole = document.createElement('div');
       hole.className = 'hole';
@@ -77,19 +78,17 @@
     }
 
     function showMole() {
-      // remove any existing mole
+      // remove existing mole
       document.querySelectorAll('.hole .mole').forEach(m => m.remove());
 
       const holeEls = document.querySelectorAll('.hole');
       const idx = Math.floor(Math.random() * holeEls.length);
-
       const mole = document.createElement('img');
       mole.src = 'mole.png';
       mole.alt = 'mole';
       mole.className = 'mole';
-      mole.classList.add('hidden');
 
-      // on click, bump score and remove mole immediately
+      // on click: increment score and remove immediately
       mole.addEventListener('click', () => {
         score++;
         scoreEl.textContent = score;
@@ -98,10 +97,8 @@
 
       holeEls[idx].appendChild(mole);
 
-      // wait one frame then pop up
-      requestAnimationFrame(() => {
-        mole.classList.remove('hidden');
-      });
+      // trigger travel‑up on next frame
+      requestAnimationFrame(() => mole.classList.add('up'));
     }
 
     function startGame() {
@@ -112,7 +109,7 @@
       startBtn.disabled = true;
 
       showMole();
-      moleTimer = setInterval(showMole, 800);
+      moleTimer = setInterval(showMole, 1000);
 
       timerId = setInterval(() => {
         timeLeft--;
