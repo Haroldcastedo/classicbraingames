@@ -101,7 +101,7 @@ function renderTableau() {
     pileDiv.className = 'pile';
     col.forEach((card, idx) => {
       const cd = document.createElement('div');
-      cd.className = 'card' + (card.faceUp ? '' : ' face-down');
+      cd.className = 'card' + (card.faceUp ? ' face-up ' + (card.suit==='♥'||card.suit==='♦' ? 'red' : 'black') : ' face-down');
       cd.textContent = card.faceUp ? card.value + card.suit : '';
       cd.style.top = (idx * 25) + 'px';
       cd.draggable = card.faceUp;
@@ -123,8 +123,7 @@ function drawCard() {
   }
   recordState();
   updateScore(5);
-  showFirework('match');
-  render();
+render();
 }
 
 function dragStart(e, col, idx) {
@@ -144,8 +143,7 @@ function dropOnTableau(e, targetCol) {
     tableau[targetCol] = targetPile.concat(moving);
     flipTop(fromCol);
     updateScore(5);
-    showFirework('match');
-    render();
+render();
     checkWin();
   }
 }
@@ -169,8 +167,7 @@ function dropOnFoundation(e) {
     pile.push(card);
     flipTop(col);
     updateScore(10);
-    showFirework('match');
-    render();
+render();
     checkWin();
   } else {
     tableau[col].push(card);
