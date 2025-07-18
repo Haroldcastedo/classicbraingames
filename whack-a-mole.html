@@ -32,26 +32,26 @@
     }
     .hole {
       width: 150px;
-      height: 100px;
-      background: #8B4513;           /* saddle‑brown base */
-      border-radius: 75px / 50px;    /* oblong */
+      height: 150px;
+      background: #000;                /* black hole */
+      border-radius: 50%;
       position: relative;
-      overflow: visible;             /* allow mole above rim */
+      overflow: visible;               /* let mole peek out */
       cursor: pointer;
     }
     .mole {
       position: absolute;
-      bottom: -120px;                /* start fully hidden */
+      bottom: -150px;                  /* fully hidden */
       left: 50%;
       transform: translateX(-50%);
-      width: 120px;
+      width: 130px;
       height: auto;
-      transition: bottom 0.5s ease-out;
+      transition: bottom 0.6s ease-out;
       user-select: none;
-      z-index: 10;                   /* top of hole rim */
+      z-index: 10;                     /* above the hole rim */
     }
     .mole.up {
-      bottom: 0;                     /* travel up onto the rim */
+      bottom: 75px;                    /* halfway out: half the hole’s diameter */
     }
   </style>
 </head>
@@ -70,7 +70,7 @@
     const startBtn= document.getElementById('start');
     let score = 0, timeLeft = 30, timerId, moleTimer;
 
-    // Create 9 holes
+    // build 9 holes
     for (let i = 0; i < 9; i++) {
       const hole = document.createElement('div');
       hole.className = 'hole';
@@ -83,12 +83,13 @@
 
       const holeEls = document.querySelectorAll('.hole');
       const idx = Math.floor(Math.random() * holeEls.length);
+
       const mole = document.createElement('img');
       mole.src = 'mole.png';
       mole.alt = 'mole';
       mole.className = 'mole';
 
-      // on click: increment score and remove immediately
+      // click=score
       mole.addEventListener('click', () => {
         score++;
         scoreEl.textContent = score;
@@ -97,8 +98,8 @@
 
       holeEls[idx].appendChild(mole);
 
-      // trigger travel‑up on next frame
-      requestAnimationFrame(() => mole.classList.add('up'));
+      // trigger smooth travel up
+      setTimeout(() => mole.classList.add('up'), 20);
     }
 
     function startGame() {
