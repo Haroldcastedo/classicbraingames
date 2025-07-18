@@ -16,31 +16,35 @@
     }
     #holes {
       display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 10px;
+      grid-template-columns: repeat(3, 120px);
+      gap: 15px;
       justify-content: center;
       margin: 0 auto;
     }
     .hole {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 80px;
       background: #ccc;
-      border-radius: 50%;
+      /* elliptical border for oblong shape */
+      border-radius: 60px / 40px;
       position: relative;
       overflow: hidden;
       cursor: pointer;
     }
     .mole {
       position: absolute;
-      bottom: -80px;        /* start hidden below */
-      left: 10px;
-      width: 80px;
-      height: 80px;
+      /* start hidden below the hole */
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 100px;
       transition: bottom 0.2s ease-out;
       user-select: none;
     }
-    .visible {
-      bottom: 10px;         /* pop up */
+    .mole.visible {
+      /* pop up so that the mole aligns nicely with the hole rim */
+      bottom: 0;
     }
     #score, #time {
       font-size: 1.2rem;
@@ -67,7 +71,7 @@
     const startBtn= document.getElementById('start');
     let score=0, timeLeft=30, timerId, moleTimer;
 
-    // Build 9 holes
+    // Build 9 oblong holes
     for(let i=0;i<9;i++){
       const hole=document.createElement('div');
       hole.className='hole';
@@ -75,7 +79,7 @@
     }
 
     function showMole(){
-      // clear any existing mole
+      // remove any existing mole
       document.querySelectorAll('.hole .mole').forEach(m=>m.remove());
 
       const holeEls = document.querySelectorAll('.hole');
@@ -84,7 +88,7 @@
       mole.src = 'mole.png';
       mole.alt = 'mole';
       mole.className = 'mole';
-      // on click, bump score and remove
+      // whack handler
       mole.addEventListener('click', () => {
         score++;
         scoreEl.textContent = score;
@@ -92,7 +96,7 @@
       });
       holeEls[idx].appendChild(mole);
 
-      // trigger pop
+      // trigger the pop‑up on next frame
       requestAnimationFrame(() => {
         mole.classList.add('visible');
       });
