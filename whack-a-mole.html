@@ -5,21 +5,61 @@
   <title>Whack A Mole</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 1rem; background: #f0f0f0; }
-    #holes { display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; justify-content: center; margin: 1rem auto; }
-    .hole { width: 100px; height: 100px; background: #ccc; border-radius: 50%; position: relative; cursor: pointer; }
-    .mole { background: brown; width: 80px; height: 80px; border-radius: 50%; position: absolute; top: 10px; left: 10px; }
-    #score, #time { font-size: 1.2rem; margin: 0 1rem; }
-    #start { padding: 0.5rem 1rem; font-size: 1rem; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 1rem;
+      background: #f0f0f0;
+    }
+    #controls {
+      margin-bottom: 1rem;
+    }
+    #holes {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    .hole {
+      width: 100px;
+      height: 100px;
+      background: #ccc;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .mole {
+      position: absolute;
+      bottom: -80px;        /* start hidden below */
+      left: 10px;
+      width: 80px;
+      height: 80px;
+      transition: bottom 0.2s ease-out;
+      user-select: none;
+    }
+    .visible {
+      bottom: 10px;         /* pop up */
+    }
+    #score, #time {
+      font-size: 1.2rem;
+      margin: 0 1rem;
+    }
+    #start {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
   <h2>Whack A Mole</h2>
-  <div>
+  <div id="controls">
     Time left: <span id="time">30</span>s&nbsp;&nbsp;&nbsp;Score: <span id="score">0</span>
+    <button id="start">Start</button>
   </div>
-  <button id="start">Start</button>
   <div id="holes"></div>
+
   <script>
     const holesEl = document.getElementById('holes');
     const scoreEl = document.getElementById('score');
@@ -27,7 +67,7 @@
     const startBtn= document.getElementById('start');
     let score=0, timeLeft=30, timerId, moleTimer;
 
-    // create 9 holes
+    // Build 9 holes
     for(let i=0;i<9;i++){
       const hole=document.createElement('div');
       hole.className='hole';
@@ -35,30 +75,46 @@
     }
 
     function showMole(){
-      const holes = document.querySelectorAll('.hole');
-      holes.forEach(h=>h.innerHTML='');
-      const idx = Math.floor(Math.random()*9);
-      const mole = document.createElement('div');
-      mole.className='mole';
-      mole.addEventListener('click', ()=>{ score++; scoreEl.textContent=score; mole.remove(); });
-      holes[idx].appendChild(mole);
+      // clear any existing mole
+      document.querySelectorAll('.hole .mole').forEach(m=>m.remove());
+
+      const holeEls = document.querySelectorAll('.hole');
+      const idx = Math.floor(Math.random()*holeEls.length);
+      const mole = document.createElement('img');
+      mole.src = 'mole.png';
+      mole.alt = 'mole';
+      mole.className = 'mole';
+      // on click, bump score and remove
+      mole.addEventListener('click', () => {
+        score++;
+        scoreEl.textContent = score;
+        mole.remove();
+      });
+      holeEls[idx].appendChild(mole);
+
+      // trigger pop
+      requestAnimationFrame(() => {
+        mole.classList.add('visible');
+      });
     }
 
     function startGame(){
       score=0; timeLeft=30;
-      scoreEl.textContent=0;
-      timeEl.textContent=30;
-      startBtn.disabled=true;
+      scoreEl.textContent = 0;
+      timeEl.textContent = 30;
+      startBtn.disabled = true;
+
       showMole();
       moleTimer = setInterval(showMole, 800);
+
       timerId = setInterval(()=>{
         timeLeft--;
         timeEl.textContent = timeLeft;
-        if(timeLeft<=0){
+        if(timeLeft <= 0){
           clearInterval(timerId);
           clearInterval(moleTimer);
           alert('Time up! Your score: '+score);
-          startBtn.disabled=false;
+          startBtn.disabled = false;
         }
       },1000);
     }
