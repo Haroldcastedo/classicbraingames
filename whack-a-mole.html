@@ -33,25 +33,25 @@
     .hole {
       width: 150px;
       height: 150px;
-      background: #000;                /* black hole */
+      background: #000;
       border-radius: 50%;
       position: relative;
-      overflow: visible;               /* let mole peek out */
+      overflow: visible;
       cursor: pointer;
     }
     .mole {
       position: absolute;
-      bottom: -150px;                  /* fully hidden */
+      bottom: -120px;         /* fully hidden */
       left: 50%;
       transform: translateX(-50%);
-      width: 130px;
-      height: auto;
+      width: 120px;
+      height: 120px;
       transition: bottom 0.6s ease-out;
       user-select: none;
-      z-index: 10;                     /* above the hole rim */
+      z-index: 10;
     }
     .mole.up {
-      bottom: 75px;                    /* halfway out: half the hole’s diameter */
+      bottom:  60px;          /* half the mole’s height = halfway out */
     }
   </style>
 </head>
@@ -68,60 +68,54 @@
     const scoreEl = document.getElementById('score');
     const timeEl  = document.getElementById('time');
     const startBtn= document.getElementById('start');
-    let score = 0, timeLeft = 30, timerId, moleTimer;
+    let score=0, timeLeft=30, timerId, moleTimer;
 
     // build 9 holes
-    for (let i = 0; i < 9; i++) {
+    for(let i=0;i<9;i++){
       const hole = document.createElement('div');
       hole.className = 'hole';
       holesEl.appendChild(hole);
     }
 
-    function showMole() {
-      // remove existing mole
-      document.querySelectorAll('.hole .mole').forEach(m => m.remove());
-
+    function showMole(){
+      // clear old
+      document.querySelectorAll('.hole .mole').forEach(m=>m.remove());
       const holeEls = document.querySelectorAll('.hole');
-      const idx = Math.floor(Math.random() * holeEls.length);
+      const idx = Math.floor(Math.random()*holeEls.length);
 
       const mole = document.createElement('img');
       mole.src = 'mole.png';
       mole.alt = 'mole';
       mole.className = 'mole';
-
-      // click=score
-      mole.addEventListener('click', () => {
+      mole.addEventListener('click', ()=>{
         score++;
         scoreEl.textContent = score;
         mole.remove();
       });
 
       holeEls[idx].appendChild(mole);
-
-      // trigger smooth travel up
-      setTimeout(() => mole.classList.add('up'), 20);
+      // animate up from -120 → 60
+      setTimeout(()=> mole.classList.add('up'), 20);
     }
 
-    function startGame() {
-      score = 0;
-      timeLeft = 30;
+    function startGame(){
+      score = 0; timeLeft = 30;
       scoreEl.textContent = 0;
       timeEl.textContent = 30;
       startBtn.disabled = true;
 
       showMole();
       moleTimer = setInterval(showMole, 1000);
-
-      timerId = setInterval(() => {
+      timerId = setInterval(()=>{
         timeLeft--;
         timeEl.textContent = timeLeft;
-        if (timeLeft <= 0) {
+        if(timeLeft <= 0){
           clearInterval(timerId);
           clearInterval(moleTimer);
           alert('Time up! Your score: ' + score);
           startBtn.disabled = false;
         }
-      }, 1000);
+      },1000);
     }
 
     startBtn.addEventListener('click', startGame);
