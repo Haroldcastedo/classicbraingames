@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Whack A Mole</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 1rem; background: #f0f0f0; }
+    #holes { display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; justify-content: center; margin: 1rem auto; }
+    .hole { width: 100px; height: 100px; background: #ccc; border-radius: 50%; position: relative; cursor: pointer; }
+    .mole { background: brown; width: 80px; height: 80px; border-radius: 50%; position: absolute; top: 10px; left: 10px; }
+    #score, #time { font-size: 1.2rem; margin: 0 1rem; }
+    #start { padding: 0.5rem 1rem; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h2>Whack A Mole</h2>
+  <div>
+    Time left: <span id="time">30</span>s&nbsp;&nbsp;&nbsp;Score: <span id="score">0</span>
+  </div>
+  <button id="start">Start</button>
+  <div id="holes"></div>
+  <script>
+    const holesEl = document.getElementById('holes');
+    const scoreEl = document.getElementById('score');
+    const timeEl  = document.getElementById('time');
+    const startBtn= document.getElementById('start');
+    let score=0, timeLeft=30, timerId, moleTimer;
+
+    // create 9 holes
+    for(let i=0;i<9;i++){
+      const hole=document.createElement('div');
+      hole.className='hole';
+      holesEl.appendChild(hole);
+    }
+
+    function showMole(){
+      const holes = document.querySelectorAll('.hole');
+      holes.forEach(h=>h.innerHTML='');
+      const idx = Math.floor(Math.random()*9);
+      const mole = document.createElement('div');
+      mole.className='mole';
+      mole.addEventListener('click', ()=>{ score++; scoreEl.textContent=score; mole.remove(); });
+      holes[idx].appendChild(mole);
+    }
+
+    function startGame(){
+      score=0; timeLeft=30;
+      scoreEl.textContent=0;
+      timeEl.textContent=30;
+      startBtn.disabled=true;
+      showMole();
+      moleTimer = setInterval(showMole, 800);
+      timerId = setInterval(()=>{
+        timeLeft--;
+        timeEl.textContent = timeLeft;
+        if(timeLeft<=0){
+          clearInterval(timerId);
+          clearInterval(moleTimer);
+          alert('Time up! Your score: '+score);
+          startBtn.disabled=false;
+        }
+      },1000);
+    }
+
+    startBtn.addEventListener('click', startGame);
+  </script>
+</body>
+</html>
