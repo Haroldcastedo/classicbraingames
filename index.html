@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <title>Classic Brain Games</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans:400&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --primary: #2e8b57;     /* deep green */
-      --accent:  #f5a623;     /* golden accent */
-      --bg:      #f0f9f5;     /* light mint */
+      --primary: #2e8b57;
+      --accent:  #f5a623;
+      --bg:      #f0f9f5;
       --gray:    #555;
     }
     * { box-sizing: border-box; }
@@ -29,6 +28,15 @@
       color: white;
       text-align: center;
       padding: 2rem 1rem;
+      position: relative;
+    }
+    /* Logo */
+    header .logo {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 64px;
     }
     header h1 {
       margin: 0;
@@ -37,7 +45,7 @@
       letter-spacing: 1px;
     }
     header p {
-      margin: 0.5rem 0 0;
+      margin: .5rem 0 0;
       font-size: 1.1rem;
     }
     main {
@@ -81,19 +89,20 @@
   </style>
 </head>
 <body>
+
   <header>
+    <!-- Your logo on the left -->
+    <img src="/logo.png" alt="Classic Brain Games" class="logo">
     <h1>Classic Brain Games</h1>
     <p>Fun, free games to boost memory and reaction time</p>
   </header>
 
   <main>
     <div class="games">
-      <!-- Memory Match -->
       <a href="/memory-match.html" class="game">
         <img src="/memory-thumb.jpg" alt="Memory Match">
         <p>Memory Match</p>
       </a>
-      <!-- Whack A Mole -->
       <a href="/whack-a-mole.html" class="game">
         <img src="/whack-thumb.jpg" alt="Whack A Mole">
         <p>Whack A Mole</p>
@@ -104,5 +113,6 @@
   <footer>
     &copy; 2025 Classic Brain Games
   </footer>
+
 </body>
 </html>
